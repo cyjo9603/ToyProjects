@@ -6,6 +6,7 @@ import compression from 'compression';
 import cors from 'cors';
 
 import schema from './schema';
+import { sequelize } from './sequelize/models';
 
 const app = express();
 const server = new ApolloServer({
@@ -14,6 +15,14 @@ const server = new ApolloServer({
 });
 
 app.set('port', 8000);
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log('db connect success');
+  })
+  .catch((err: Error) => {
+    console.error(err);
+  });
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(compression());
