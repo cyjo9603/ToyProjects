@@ -27,11 +27,12 @@ User.init(
     tableName: 'user',
     charset: 'utf8',
     collate: 'utf8_general_ci',
+    timestamps: false,
   },
 );
 
 export const associate = (db: dbType) => {
-  db.User.belongsToMany(db.User, { through: 'Friend', as: 'Friends' });
+  db.User.belongsToMany(db.User, { through: 'Friend', as: 'Friends', timestamps: false });
 };
 
 export default User;
