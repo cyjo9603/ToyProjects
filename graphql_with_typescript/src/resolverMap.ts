@@ -4,19 +4,29 @@ import User from './sequelize/models/user';
 
 const resolverMap: IResolvers = {
   Query: {
-    user: (_, args) => {
-      const user = User.findOne({
+    user: async (_, args) => {
+      const user = await User.findOne({
         where: args,
       });
       return user;
     },
   },
   Mutation: {
-    createUser: (_, args) => {
-      const user = User.create({
+    createUser: async (_, args) => {
+      const user = await User.create({
         name: args.name,
         gender: args.gender,
       });
+      return user;
+    },
+    updateUser: async (_, args) => {
+      const data: { name?: string; gender?: string } = {};
+
+      data.name = args.name;
+      data.gender = args.gender;
+
+      await User.update(data, { where: { id: args.id } });
+      const user = await User.findOne({ where: { id: args.id } });
       return user;
     },
   },
