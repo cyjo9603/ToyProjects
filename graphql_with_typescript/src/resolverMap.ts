@@ -36,6 +36,11 @@ const resolverMap: IResolvers = {
       const user = await User.findOne({ where: { id: args.id } });
       return user;
     },
+    addFriend: async (_, args) => {
+      const user = await User.findOne({ where: { id: args.id } });
+      await user.addFriend(args.targetId);
+      return args.targetId;
+    },
   },
 };
 
