@@ -1,7 +1,14 @@
+type Friends {
+    id: Int!
+    name: String!
+    gender: String!
+}
+
 type User {
     id: Int!
     name: String!
     gender: String!
+    Friends: [Friends]!
 }
 
 type Query {

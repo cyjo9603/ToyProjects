@@ -7,7 +7,14 @@ const resolverMap: IResolvers = {
     user: async (_, args) => {
       const user = await User.findOne({
         where: args,
+        include: [
+          {
+            model: User,
+            as: 'Friends',
+          },
+        ],
       });
+      console.log(user.dataValues);
       return user;
     },
   },
