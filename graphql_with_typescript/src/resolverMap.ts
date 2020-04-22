@@ -4,8 +4,11 @@ import User from './sequelize/models/user';
 
 const resolverMap: IResolvers = {
   Query: {
-    user: () => {
-      return 'test';
+    user: (_, args) => {
+      const user = User.findOne({
+        where: args,
+      });
+      return user;
     },
   },
   Mutation: {

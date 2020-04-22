@@ -5,7 +5,7 @@ type User {
 }
 
 type Query {
-    user: String!
+    user(id: Int!): User!
 
 }
 
