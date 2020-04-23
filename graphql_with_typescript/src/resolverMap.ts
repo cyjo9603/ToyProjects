@@ -1,7 +1,11 @@
 import { IResolvers } from 'graphql-tools';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import User from './sequelize/models/user';
+
+dotenv.config();
 
 const resolverMap: IResolvers = {
   Query: {
@@ -44,6 +48,19 @@ const resolverMap: IResolvers = {
       const user = await User.findOne({ where: { id: args.id } });
       await user.addFriend(args.targetId);
       return args.targetId;
+    },
+    signin: async (_, args) => {
+      const user = await User.findOne({
+        where: {
+          name: args.name,
+        },
+      });
+      const match = await bcrypt.compare(args.password, user.password);
+      if (!match) {
+        return 0;
+      }
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY!);
+      return { token, user };
     },
   },
 };
