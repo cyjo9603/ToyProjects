@@ -7,6 +7,7 @@ import { dbType } from './index';
 class User extends Model {
   public readonly id!: number;
   public name!: string;
+  public password!: string;
   public gender!: string;
 }
 
@@ -14,6 +15,10 @@ User.init(
   {
     name: {
       type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING(200),
       allowNull: false,
     },
     gender: {

@@ -1,4 +1,5 @@
 import { IResolvers } from 'graphql-tools';
+import bcrypt from 'bcrypt';
 
 import User from './sequelize/models/user';
 
@@ -20,8 +21,11 @@ const resolverMap: IResolvers = {
   },
   Mutation: {
     createUser: async (_, args) => {
+      const hashedPassword = await bcrypt.hash(args.password, 12);
+
       const user = await User.create({
         name: args.name,
+        password: hashedPassword,
         gender: args.gender,
       });
       return user;
