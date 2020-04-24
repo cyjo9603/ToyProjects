@@ -9,9 +9,9 @@ dotenv.config();
 
 const resolverMap: IResolvers = {
   Query: {
-    user: async (_, args) => {
+    user: async (_, args, context) => {
       const user = await User.findOne({
-        where: args,
+        where: { id: context.id },
         include: [
           {
             model: User,
@@ -19,7 +19,6 @@ const resolverMap: IResolvers = {
           },
         ],
       });
-      console.log(user.dataValues);
       return user;
     },
   },
@@ -34,14 +33,14 @@ const resolverMap: IResolvers = {
       });
       return user;
     },
-    updateUser: async (_, args) => {
+    updateUser: async (_, args, context) => {
       const data: { name?: string; gender?: string } = {};
 
       data.name = args.name;
       data.gender = args.gender;
 
-      await User.update(data, { where: { id: args.id } });
-      const user = await User.findOne({ where: { id: args.id } });
+      await User.update(data, { where: { id: context.id } });
+      const user = await User.findOne({ where: { id: context.id } });
       return user;
     },
     addFriend: async (_, args) => {
