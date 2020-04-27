@@ -18,8 +18,10 @@ const server = new ApolloServer({
   context: async ({ req }) => {
     const token = req.headers.authorization;
     if (token) {
-      const { id }: any = jwt.verify(token, process.env.JWT_SECRET_KEY!);
-      return { id };
+      const { id, type, exp }: any = jwt.verify(token, process.env.JWT_SECRET_KEY!);
+      if (type === 'ACCESS' && exp > new Date().getTime()) {
+        return { id };
+      }
     }
   },
 });

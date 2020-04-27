@@ -9,6 +9,7 @@ class User extends Model {
   public name!: string;
   public password!: string;
   public gender!: string;
+  public refreshToken!: string;
 }
 
 User.init(
@@ -24,6 +25,10 @@ User.init(
     gender: {
       type: DataTypes.STRING(10),
       allowNull: false,
+    },
+    refreshToken: {
+      type: DataTypes.STRING(300),
+      allowNull: true,
     },
   },
   {

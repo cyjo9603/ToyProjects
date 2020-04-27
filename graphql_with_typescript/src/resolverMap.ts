@@ -58,8 +58,26 @@ const resolverMap: IResolvers = {
       if (!match) {
         return 0;
       }
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY!);
-      return { token, user };
+      const refreshToken = jwt.sign(
+        {
+          id: user.id,
+          type: 'REFRESH',
+          exp: new Date().getTime() + 1000 * 60 * 60 * 24,
+        },
+        process.env.JWT_SECRET_KEY!,
+      );
+      const accessToken = jwt.sign(
+        {
+          id: user.id,
+          type: 'ACCESS',
+          exp: new Date().getTime() + 1000 * 60 * 30,
+        },
+        process.env.JWT_SECRET_KEY!,
+      );
+
+      await user.update({ refreshToken });
+
+      return { refreshToken, accessToken, user };
     },
   },
 };
