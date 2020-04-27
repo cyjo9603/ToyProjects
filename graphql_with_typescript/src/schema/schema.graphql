@@ -27,5 +27,6 @@ type Mutation {
     updateUser(name: String, gender: String): User!
     addFriend(id: Int!, targetId: Int!): Int!
     signin(name: String!, password: String!): AuthPayload!
+    issueAccessToken(refreshToken: String!): String!
 }
 

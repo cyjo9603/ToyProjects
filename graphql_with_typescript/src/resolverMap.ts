@@ -79,6 +79,28 @@ const resolverMap: IResolvers = {
 
       return { refreshToken, accessToken, user };
     },
+    issueAccessToken: async (_, args) => {
+      const { id, type, exp }: any = jwt.verify(args.refreshToken, process.env.JWT_SECRET_KEY!);
+      const user =
+        type === 'REFRESH' &&
+        exp > new Date().getTime() &&
+        (await User.findOne({
+          where: { id },
+        }));
+
+      if (user.refreshToken === args.refreshToken) {
+        const accessToken = jwt.sign(
+          {
+            id: user.id,
+            type: 'ACCESS',
+            exp: new Date().getTime() + 1000 * 60 * 30,
+          },
+          process.env.JWT_SECRET_KEY!,
+        );
+
+        return accessToken;
+      }
+    },
   },
 };
 
