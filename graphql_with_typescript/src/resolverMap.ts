@@ -101,6 +101,11 @@ const resolverMap: IResolvers = {
         return accessToken;
       }
     },
+    logout: async (_, args, context) => {
+      const user = await User.findOne({ where: { id: context.id } });
+      await user.update({ refreshToken: null });
+      return true;
+    },
   },
 };
 

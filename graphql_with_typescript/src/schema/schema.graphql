@@ -28,5 +28,6 @@ type Mutation {
     addFriend(id: Int!, targetId: Int!): Int!
     signin(name: String!, password: String!): AuthPayload!
     issueAccessToken(refreshToken: String!): String!
+    logout: Boolean!
 }
 
