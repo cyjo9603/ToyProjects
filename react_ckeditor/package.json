@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@toast-ui/react-editor": "2.0.1",
+    "@ckeditor/ckeditor5-build-classic": "18.0.0",
+    "@ckeditor/ckeditor5-react": "2.1.0",
     "next": "9.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
