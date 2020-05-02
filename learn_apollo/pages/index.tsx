@@ -16,15 +16,30 @@ const SIGNIN_REQUEST = gql`
   }
 `;
 
+const GET_USERINFO = gql`
+  query {
+    user {
+      name
+      gender
+      Friends {
+        name
+      }
+    }
+  }
+`;
+
 const Index = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const { loading, error, data } = useQuery(GET_USERINFO);
   const [signin] = useMutation(SIGNIN_REQUEST, {
     update(cache, { data: { signin } }) {
       localStorage.setItem('accessToken', signin.accessToken);
       localStorage.setItem('refreshToken', signin.refreshToken);
     },
   });
+
+  console.log({ loading, error, data });
 
   const onSignIn = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +61,10 @@ const Index = () => {
         <input type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
         <button type="submit">로그인</button>
       </form>
+      <div>
+        <p>{data && data.user.name}</p>
+        <p>{data && data.user.gender}</p>
+      </div>
     </>
   );
 };
