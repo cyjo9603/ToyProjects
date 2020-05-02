@@ -7,6 +7,13 @@ import fetch from 'node-fetch';
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
   fetch: fetch,
+  request: async (operation) => {
+    const token = await localStorage.getItem('accessToken');
+    token &&
+      operation.setContext({
+        header: { authorization: token },
+      });
+  },
 });
 
 interface Props {
