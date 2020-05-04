@@ -19,6 +19,7 @@ const SIGNIN_REQUEST = gql`
 const GET_USERINFO = gql`
   query {
     user {
+      id
       name
       gender
       Friends {
@@ -31,15 +32,19 @@ const GET_USERINFO = gql`
 const Index = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const { loading, error, data } = useQuery(GET_USERINFO);
+  const { loading, error, data, client } = useQuery(GET_USERINFO);
   const [signin] = useMutation(SIGNIN_REQUEST, {
     update(cache, { data: { signin } }) {
       localStorage.setItem('accessToken', signin.accessToken);
       localStorage.setItem('refreshToken', signin.refreshToken);
+
+      const { user } = data ? cache.readQuery({ query: GET_USERINFO }) : { user: null };
+
+      client.writeData({ data: { ...user, ...signin.user } });
     },
   });
 
-  console.log({ loading, error, data });
+  data && console.log({ loading, error, data });
 
   const onSignIn = (e: React.FormEvent) => {
     e.preventDefault();
