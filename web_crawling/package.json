@@ -1,0 +1,26 @@
+{
+  "name": "web_crawling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "next": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.19.2",
+    "cheerio": "1.0.0-rc.3",
+    "next": "9.4.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "16.9.41",
+    "@types/react-dom": "16.9.8",
+    "typescript": "3.9.6"
+  }
+}
