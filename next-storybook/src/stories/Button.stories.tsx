@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import Button from '../components/Button';
@@ -7,7 +7,6 @@ import Button from '../components/Button';
 export default {
   title: 'Button',
   component: Button,
-  decorators: [withKnobs],
 };
 
 export const Default = () => {
