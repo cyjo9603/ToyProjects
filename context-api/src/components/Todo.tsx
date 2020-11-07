@@ -1,15 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useContext } from 'react';
 
-import { Todo } from '../store';
+import Context, { Todo } from '../store';
+import { deleteTodoAction } from '../store/deleteTodo';
 
 interface Props {
   todo: Todo;
 }
 
-const Todo: FC<Props> = ({ todo }) => (
-  <div>
-    {todo.id}:{todo.content}
-  </div>
-);
+const Todo: FC<Props> = ({ todo }) => {
+  const { dispatch } = useContext(Context);
+
+  const onClickDelete = useCallback(() => {
+    dispatch(deleteTodoAction(todo.id));
+  }, [todo.id]);
+
+  return (
+    <div>
+      <span>
+        {todo.id}:{todo.content}
+      </span>
+      <span onClick={onClickDelete}>❌</span>
+    </div>
+  );
+};
 
 export default Todo;
