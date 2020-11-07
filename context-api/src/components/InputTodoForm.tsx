@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext, useCallback } from 'react';
+import React, { FC, useState, useContext, useCallback, useRef, FormEvent } from 'react';
 
 import Context from '../store';
 import { addTodoAction } from '../store/addTodo';
@@ -6,22 +6,29 @@ import { addTodoAction } from '../store/addTodo';
 const InputTodoForm: FC = () => {
   const [content, setContent] = useState('');
   const { dispatch } = useContext(Context);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onChangeContent = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   }, []);
 
-  const onClickButton = useCallback(() => {
-    dispatch(addTodoAction(content));
-    setContent('');
-  }, [content]);
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      dispatch(addTodoAction(content));
+      setContent('');
+
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    },
+    [content, inputRef.current]
+  );
 
   return (
-    <form>
-      <input type="text" value={content} onChange={onChangeContent} />
-      <button type="button" onClick={onClickButton}>
-        입력
-      </button>
+    <form onSubmit={onSubmit}>
+      <input type="text" value={content} onChange={onChangeContent} ref={inputRef} />
+      <button type="submit">입력</button>
     </form>
   );
 };
