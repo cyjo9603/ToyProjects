@@ -9,6 +9,15 @@ function connect() {
     })
     .then(() => {
       console.log('Connected to mongodb');
+      const User = require('./schema/user');
+      User.create({
+        email: 'test@test.com',
+        password: 'testpassword',
+        nickname: 'chanyeong',
+        image: { width: 100, height: 100 },
+        likes: [],
+        any: [],
+      });
     })
     .catch((err) => {
       console.error(err);
