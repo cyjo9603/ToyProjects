@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import express, { Express } from 'express';
 import logger from 'morgan';
 
@@ -6,13 +6,15 @@ import schema from './schema';
 
 const GRAPHQL_ENDPOINT = '/graphql' as const;
 
+const pubsub = new PubSub();
+
 class App {
   public app: Express;
   private server: ApolloServer;
 
   constructor() {
     this.app = express();
-    this.server = new ApolloServer({ schema });
+    this.server = new ApolloServer({ schema, context: { pubsub } });
     this.middlewares();
   }
 
