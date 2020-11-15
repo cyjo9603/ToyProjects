@@ -1,12 +1,8 @@
-const chattingLog = [
-  {
-    id: 0,
-    writer: 'admin',
-    description: 'HELLO',
-  },
-];
+import { Resolvers } from '../../../types/types';
 
-const resolvers = {
+import chattingLog from '../shared/chattingLog';
+
+const resolvers: Resolvers = {
   Query: {
     getChatList: () => {
       return chattingLog;
