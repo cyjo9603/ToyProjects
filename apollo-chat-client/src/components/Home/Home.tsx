@@ -1,10 +1,21 @@
-import React, { FC } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { FC, useEffect } from 'react';
+import { useQuery, useSubscription } from '@apollo/react-hooks';
 
-import { GET_CHAT_LIST } from '../../queries/chat.queries';
+import { GET_CHAT_LIST, SUB_CHAT } from '../../queries/chat.queries';
 
 const Home: FC = () => {
-  const { loading, data } = useQuery(GET_CHAT_LIST);
+  const { loading, data, subscribeToMore } = useQuery(GET_CHAT_LIST);
+
+  useEffect(() => {
+    subscribeToMore({
+      document: SUB_CHAT,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const newChat = subscriptionData.data.subscriptionChat;
+        return { getChatList: [...prev.getChatList, newChat] };
+      },
+    });
+  }, []);
 
   return (
     <div>

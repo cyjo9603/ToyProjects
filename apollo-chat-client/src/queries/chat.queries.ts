@@ -18,3 +18,13 @@ export const ADD_CHAT = gql`
     }
   }
 `;
+
+export const SUB_CHAT = gql`
+  subscription SubChat {
+    subscriptionChat {
+      id
+      writer
+      description
+    }
+  }
+`;
