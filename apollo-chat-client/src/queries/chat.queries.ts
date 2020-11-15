@@ -9,3 +9,12 @@ export const GET_CHAT_LIST = gql`
     }
   }
 `;
+
+export const ADD_CHAT = gql`
+  mutation AddChat($writer: String!, $description: String!) {
+    addChat(writer: $writer, description: $description) {
+      result
+      error
+    }
+  }
+`;
