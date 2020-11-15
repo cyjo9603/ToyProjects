@@ -7,9 +7,13 @@
     "dev": "webpack-dev-server --mode development --open --hot"
   },
   "dependencies": {
+    "@apollo/client": "^3.2.5",
+    "@apollo/react-hooks": "^4.0.0",
+    "graphql": "^15.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
