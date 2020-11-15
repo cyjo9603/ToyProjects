@@ -1,0 +1,8 @@
+type AddChatResponse {
+  result: Boolean!
+  error: String
+}
+
+type Mutation {
+  addChat(writer: String!, description: String!): AddChatResponse!
+}
