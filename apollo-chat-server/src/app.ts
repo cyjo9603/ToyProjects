@@ -2,8 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import express, { Express } from 'express';
 import logger from 'morgan';
 
-import resolvers from './resolvers';
-import typeDefs from './schemas';
+import schema from './schema';
 
 const GRAPHQL_ENDPOINT = '/graphql' as const;
 
@@ -13,7 +12,7 @@ class App {
 
   constructor() {
     this.app = express();
-    this.server = new ApolloServer({ typeDefs, resolvers });
+    this.server = new ApolloServer({ schema });
     this.middlewares();
   }
 

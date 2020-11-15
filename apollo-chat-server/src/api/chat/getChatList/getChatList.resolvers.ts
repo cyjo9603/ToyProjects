@@ -8,7 +8,7 @@ const chattingLog = [
 
 const resolvers = {
   Query: {
-    chatting: () => {
+    getChatList: () => {
       return chattingLog;
     },
   },
