@@ -3,7 +3,7 @@ generates:
   ./src/types/types.d.ts:
     plugins:
       - add:
-          content: "import { PubSub } from 'apollo-server-express';"
+          content: "import { PubSub } from 'graphql-subscriptions';"
       - typescript
       - typescript-resolvers
     config:
