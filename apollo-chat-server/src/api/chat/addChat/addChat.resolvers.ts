@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
       const id = chattingLog.length;
       const newChat = { id, writer, description };
       chattingLog.push(newChat);
-      pubsub.publish(NEW_CHAT, { newChat });
+      pubsub.publish(NEW_CHAT, { subscriptionChat: newChat });
       return {
         result: true,
       };
