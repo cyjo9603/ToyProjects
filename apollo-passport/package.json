@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "@types/morgan": "^1.9.2",
+    "@types/passport": "^1.0.4",
+    "@types/passport-local": "^1.0.33",
     "nodemon": "^2.0.6",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
@@ -19,6 +21,8 @@
     "express": "^4.17.1",
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   }
 }
