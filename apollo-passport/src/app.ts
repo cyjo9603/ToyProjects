@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import logger from 'morgan';
+import passport from 'passport';
 
 import passportInit from '@auth/passport';
 import schema from './schema';
@@ -22,6 +23,7 @@ class App {
 
   middlewares() {
     this.app.use(logger('dev'));
+    this.app.use(passport.initialize());
     passportInit();
     this.apollo.applyMiddleware({
       app: this.app,
