@@ -5,9 +5,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
-    "start": "NODE_ENV=production PORT=3000 pm2 start ts-node -- --type-check -r tsconfig-paths/register ./src/index.ts"
+    "start": "NODE_ENV=production PORT=3000 pm2 start ts-node -- --type-check -r tsconfig-paths/register ./src/index.ts",
+    "types": "graphql-codegen"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^2.0.2",
+    "@graphql-codegen/cli": "^1.19.4",
+    "@graphql-codegen/typescript": "^1.19.0",
+    "@graphql-codegen/typescript-resolvers": "^1.18.0",
     "@types/morgan": "^1.9.2",
     "@types/passport": "^1.0.4",
     "@types/passport-local": "^1.0.33",
