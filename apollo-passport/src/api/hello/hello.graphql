@@ -1,0 +1,7 @@
+type HelloResponse {
+  result: String!
+}
+
+type Query {
+  hello: HelloResponse!
+}
