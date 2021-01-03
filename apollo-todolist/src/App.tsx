@@ -1,5 +1,12 @@
 import { FC } from 'react';
+import { ApolloProvider } from '@apollo/client';
 
-const App: FC = () => <></>;
+import apollo from './apollo';
+
+const App: FC = () => (
+  <ApolloProvider client={apollo}>
+    <></>
+  </ApolloProvider>
+);
 
 export default App;
