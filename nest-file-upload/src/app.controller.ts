@@ -21,6 +21,8 @@ export class AppController {
   async uploadImage(@UploadedFile() file, @Res() res) {
     const result = await this.uploadService.uploadObject(file);
 
+    if (!result) return res.status(505).json({ message: 'fila upload' });
+
     res.json({ path: result });
   }
 }
