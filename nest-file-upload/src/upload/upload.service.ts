@@ -5,7 +5,6 @@ import * as AWS from 'aws-sdk';
 @Injectable()
 export class UploadService {
   private s3: AWS.S3;
-  private IMAGE_LIMIT = 3145728;
 
   constructor(private readonly configService: ConfigService) {
     this.s3 = new AWS.S3({
@@ -20,7 +19,6 @@ export class UploadService {
 
   async uploadObject(image) {
     try {
-      if (image.size > this.IMAGE_LIMIT) return false;
       const imageName = `${Date.now()}${image.originalname}`;
       await this.s3
         .putObject({

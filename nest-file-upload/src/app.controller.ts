@@ -3,6 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { AppService } from './app.service';
 import { UploadService } from './upload/upload.service';
+import { uploadContants } from './upload/constants';
 
 @Controller()
 export class AppController {
@@ -17,11 +18,9 @@ export class AppController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: uploadContants.LIMIT } }))
   async uploadImage(@UploadedFile() file, @Res() res) {
     const result = await this.uploadService.uploadObject(file);
-
-    if (!result) return res.status(505).json({ message: 'fila upload' });
 
     res.json({ path: result });
   }
