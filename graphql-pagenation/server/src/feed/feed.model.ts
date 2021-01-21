@@ -6,7 +6,6 @@ import { Document } from 'mongoose';
 @Schema()
 export class Feed {
   @Field(type => String)
-  @Prop({ _id: true })
   _id!: string;
 
   @Field(type => String)

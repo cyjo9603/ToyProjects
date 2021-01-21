@@ -7,4 +7,8 @@ import { Feed, FeedDocument } from './feed.model';
 @Injectable()
 export class FeedService {
   constructor(@InjectModel(Feed.name) private feedModel: Model<FeedDocument>) {}
+
+  async add(content) {
+    await this.feedModel.create({ content });
+  }
 }
