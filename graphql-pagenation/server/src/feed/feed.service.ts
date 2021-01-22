@@ -11,4 +11,9 @@ export class FeedService {
   async add(content) {
     await this.feedModel.create({ content });
   }
+
+  async count() {
+    const count = await this.feedModel.countDocuments();
+    return count;
+  }
 }
