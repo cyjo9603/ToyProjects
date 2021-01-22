@@ -13,12 +13,9 @@ export class FeedResolver {
     @Args('page', { type: () => Int, nullable: false }) page: number,
   ): Promise<GetFeedsOutput> {
     const total = await this.feedService.count();
-    const { hidePost, startPage, endPage } = this.feedService.paging(
-      page,
-      total,
-    );
+    const { hidePost } = this.feedService.paging(page);
     const feeds = await this.feedService.find(hidePost);
-    return { result: true, feeds, startPage, endPage };
+    return { result: true, feeds, total };
   }
 
   @Mutation(() => CoreOutput)

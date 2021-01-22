@@ -8,8 +8,5 @@ export class GetFeedsOutput extends CoreOutput {
   feeds?: Feed[];
 
   @Field(type => Int, { nullable: true })
-  startPage?: number;
-
-  @Field(type => Int, { nullable: true })
-  endPage?: number;
+  total?: number;
 }

@@ -17,6 +17,10 @@ import { FeedModule } from './feed/feed.module';
       debug: false,
       playground: true,
       autoSchemaFile: true,
+      cors: {
+        origin: true,
+        credentials: true,
+      },
     }),
     FeedModule,
   ],

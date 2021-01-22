@@ -26,14 +26,9 @@ export class FeedService {
     return feeds;
   }
 
-  paging(page = 1, total: number) {
+  paging(page = 1) {
     const maxPost = 10;
-    const maxPage = 10;
     const hidePost = page === 1 ? 0 : (page - 1) * maxPost;
-    const totalPage = Math.ceil(total / maxPost);
-    const startPage = Math.floor((page - 1) / maxPage) * maxPage + 1;
-    const endPage =
-      startPage + maxPage - 1 > totalPage ? totalPage : startPage + maxPage - 1;
-    return { hidePost, startPage, endPage };
+    return { hidePost };
   }
 }
