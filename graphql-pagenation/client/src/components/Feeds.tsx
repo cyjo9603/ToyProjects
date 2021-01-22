@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { Table } from 'antd';
+import { useQuery } from '@apollo/client';
+
+import { GET_FEEDS } from '../queries/getFeeds.queries';
 
 const columns = [
   {
     title: '아이디',
-    dataIndex: 'id',
+    dataIndex: '_id',
     key: 'col_id',
   },
   {
@@ -19,14 +23,29 @@ const columns = [
 ];
 
 const Feeds = () => {
+  const [page, setPage] = useState(1);
+  const [feedsData, setFeedsData] = useState<any>();
+
+  useQuery(GET_FEEDS, {
+    variables: { page },
+    onCompleted: ({ getFeeds }) => {
+      setFeedsData(getFeeds);
+    },
+  });
+
   return (
     <Table
       columns={columns}
+      dataSource={feedsData?.feeds}
       pagination={{
         defaultCurrent: 1,
-        current: undefined,
-        total: undefined,
+        current: page,
+        total: feedsData?.total,
         showSizeChanger: false,
+        pageSize: 10,
+        onChange: (page) => {
+          setPage(page);
+        },
       }}
     />
   );
