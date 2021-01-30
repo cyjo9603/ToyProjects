@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 
-import { CoreOutput } from './dto/coreOutput.dto';
+import { BaseResponse } from './dto/baseResponse.dto';
 import { GetFeedsOutput } from './dto/getFeeds.dto';
 import { FeedService } from './feed.service';
 
@@ -18,8 +18,8 @@ export class FeedResolver {
     return { result: true, feeds, total };
   }
 
-  @Mutation(() => CoreOutput)
-  async add(@Args('content') content: string): Promise<CoreOutput> {
+  @Mutation(() => BaseResponse)
+  async add(@Args('content') content: string): Promise<BaseResponse> {
     await this.feedService.add(content);
     return { result: true };
   }

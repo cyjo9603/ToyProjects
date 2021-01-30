@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
-export class CoreOutput {
+export class BaseResponse {
   @Field(type => Boolean)
   result!: boolean;
 
