@@ -11,10 +11,7 @@ import { UploadModule } from './upload/upload.module';
       playground: true,
       autoSchemaFile: true,
       cors: { credentials: true, origin: true },
-      uploads: {
-        maxFieldSize: 10000000,
-        maxFiles: 1,
-      },
+      uploads: false,
     }),
     UploadModule,
   ],

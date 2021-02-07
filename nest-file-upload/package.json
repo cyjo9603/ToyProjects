@@ -23,6 +23,7 @@
     "aws-sdk": "2.348.0",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.2",
+    "graphql-upload": "^11.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4"

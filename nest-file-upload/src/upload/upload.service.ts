@@ -19,19 +19,23 @@ export class UploadService {
 
   async uploadObject(image) {
     try {
-      const imageName = `${Date.now()}${image.originalname}`;
+      const { createReadStream, filename, mimetype } = image.file;
+      const stream = createReadStream();
+
+      const imageName = `${Date.now()}${filename}`;
       await this.s3
         .putObject({
           Bucket: this.configService.get('BUCKET_NAME'),
           Key: imageName,
           ACL: 'public-read',
-          Body: image.buffer,
+          Body: stream.read(),
+          ContentType: mimetype,
         })
         .promise();
       return `${this.configService.get('STORAGE_END_POINT')}/${this.configService.get(
         'BUCKET_NAME',
       )}/${imageName}`;
-    } catch {
+    } catch (error) {
       return '';
     }
   }
