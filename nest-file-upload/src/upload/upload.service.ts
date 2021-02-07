@@ -32,7 +32,7 @@ export class UploadService {
         'BUCKET_NAME',
       )}/${imageName}`;
     } catch {
-      return false;
+      return '';
     }
   }
 }
