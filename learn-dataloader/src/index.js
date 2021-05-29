@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
+const DataLoader = require('dataloader');
 
 const typeDefs = gql`
   type User {
@@ -11,13 +12,17 @@ const typeDefs = gql`
     content: String
   }
 
+  type Count {
+    user: Int
+    post: Int
+  }
+
   type Post {
     title: String
     content: String
     writer: User
     comments: [Comment]
-    postCount: Int
-    userCount: Int
+    count: Count
   }
 
   type Query {
@@ -74,18 +79,14 @@ const _posts = [
   },
 ];
 
-const _count = {
+const count = {
   user: 0,
   post: 0,
-};
-
-const count = new Proxy(_count, {
-  get: (target, name) => {
-    const storedTarget = target[name];
-    target[name] = 0;
-    return storedTarget;
+  init() {
+    this.user = 0;
+    this.post = 0;
   },
-});
+};
 
 const users = new Proxy(_users, {
   get: (target, name) => {
@@ -101,25 +102,35 @@ const posts = new Proxy(_posts, {
   },
 });
 
+const batchGetUsers = async (ids) => {
+  const users = getUsers(ids);
+  return users;
+};
+
+const userLoader = new DataLoader(batchGetUsers);
+
 const getPost = (id) => new Promise((res) => res(JSON.parse(JSON.stringify(posts[id]))));
 
 const getUser = (id) => new Promise((res) => res(JSON.parse(JSON.stringify(users[id]))));
 
-const getUsers = (ids) =>
-  new Promise((res) => res(ids.map((id) => JSON.parse(JSON.stringify(users[id])))));
+const getUsers = (ids) => {
+  return new Promise((res) => res(ids.map((id) => JSON.parse(JSON.stringify(users[id])))));
+};
 
 const resolvers = {
   Query: {
     hello: () => 'hello apollo',
     post: async (_, { id }) => {
       const post = await getPost(id);
-      post.writer = await getUser(post.writer);
-      post.comments = await post.comments.map(async (comment) => ({
-        ...comment,
-        writer: await getUser(comment.writer),
-      }));
+      post.writer = await userLoader.load(post.writer);
+      for (let i = 0; i < post.comments.length; i++) {
+        post.comments[i].writer = await userLoader.load(post.comments[i].writer);
+      }
 
-      return { ...post, userCount: count.user, postCount: count.post };
+      const copiedCount = { ...count };
+      count.init();
+
+      return { ...post, count: copiedCount };
     },
   },
 };
